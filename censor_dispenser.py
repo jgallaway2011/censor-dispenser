@@ -5,24 +5,28 @@ email_three = open("email_three.txt", "r").read()
 email_four = open("email_four.txt", "r").read()
 
 #Terms that should be censored
-proprietary_terms = ["she", "personality matrix", "sense of self", "self-preservation", "learning algorithm", "her", "herself"]
+proprietary_terms = [" she", " personality matrix ", " sense of self ", " self-preservation ", " learning algorithms ", " her ", " herself "]
 
 #Functions
-def censor_text(email, text_to_censor):
+def censor_format(text_to_censor):
     censored_text = ""
     for i in range(len(text_to_censor)):
         if text_to_censor[i] == " ":
             censored_text += " "
         else:
             censored_text += "*"
-    email_censored = email.replace(text_to_censor, censored_text)
-    return email_censored
+    return censored_text
+
+def censor_text(email, text_to_censor):
+    censored_text = censor_format(text_to_censor)
+    return email.replace(text_to_censor, censored_text)
 
 def censor_text_with_list(email, list_of_text_to_censor):
     for text in list_of_text_to_censor:
-        email_censored = email.replace(text, "*" * len(text))
-    return email_censored
+        censored_text = censor_format(text)
+        email = email.replace(text, censored_text)
+    return email
 
 #Function Calls
-print(censor_text(email_one, "learning algorithms"))
-#print(censor_text_multiple(email_two, proprietary_terms))
+#print(censor_text(email_one, "learning algorithms"))
+print(censor_text_with_list(email_two, proprietary_terms))
