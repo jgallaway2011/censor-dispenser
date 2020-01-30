@@ -4,15 +4,20 @@ email_two = open("email_two.txt", "r").read()
 email_three = open("email_three.txt", "r").read()
 email_four = open("email_four.txt", "r").read()
 
-#Terms that should be censored
-proprietary_terms = [" she", " personality matrix ", " sense of self ", " self-preservation ", " learning algorithms ", " her ", " herself "]
+#List of text that should be censored
+proprietary_terms = ["she", "personality matrix ", "sense of self", "self-preservation", "learning algorithms", "her", "herself"]
+
+#List of negative words
+negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", "distressed", "concerning", "horrible", "horribly", "questionable"]
+punctuation_after = [" ", ",", "!", "?", ".", "%", "/", ")"]
+punctuation_before = ["("]
 
 #Functions
 def censor_format(text_to_censor):
     censored_text = ""
     for i in range(len(text_to_censor)):
-        if text_to_censor[i] == " ":
-            censored_text += " "
+        if text_to_censor[i] in punctuation_after:
+            censored_text += text_to_censor[i]
         else:
             censored_text += "*"
     return censored_text
@@ -22,7 +27,21 @@ def censor_text(email, text_to_censor):
     return email.replace(text_to_censor, censored_text)
 
 def censor_text_with_list(email, list_of_text_to_censor):
+    list_of_text_to_censor_edited = []
     for text in list_of_text_to_censor:
+        text_titled = text.title()
+        for punctuation in punctuation_after:
+            text_with_punctuation = text + punctuation
+            text_titled_with_punctuation = text_titled + punctuation
+            list_of_text_to_censor_edited.append(text_with_punctuation)
+            list_of_text_to_censor_edited.append(text_titled_with_punctuation)
+        for punctuation in punctuation_before:
+            text_with_punctuation = punctuation + text
+            text_titled_with_punctuation = punctuation + text_titled
+            list_of_text_to_censor_edited.append(text_with_punctuation)
+            list_of_text_to_censor_edited.append(text_titled_with_punctuation)
+    print(list_of_text_to_censor_edited)
+    for text in list_of_text_to_censor_edited:
         censored_text = censor_format(text)
         email = email.replace(text, censored_text)
     return email
