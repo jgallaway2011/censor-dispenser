@@ -9,6 +9,8 @@ proprietary_terms = ["she", "personality matrix", "sense of self", "self-preserv
 
 #List of negative words
 negative_words = ["concerned", "behind", "danger", "dangerous", "alarming", "alarmed", "out of control", "help", "unhappy", "bad", "upset", "awful", "broken", "damage", "damaging", "dismal", "distressed", "distressed", "concerning", "horrible", "horribly", "questionable"]
+
+#Lists of Punctuation
 punctuation_after = [" ", ",", "!", "?", ".", "%", "/", ")"]
 punctuation_before = ["("]
 
@@ -19,7 +21,7 @@ punctuation_before = ["("]
 def censor_format(text_to_censor):
     censored_text = ""
     for i in range(len(text_to_censor)):
-        if text_to_censor[i] in punctuation_after:
+        if text_to_censor[i] in punctuation_after or text_to_censor[i] in punctuation_before:
             censored_text += text_to_censor[i]
         else:
             censored_text += "*"
